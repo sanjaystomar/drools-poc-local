@@ -141,3 +141,60 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 
 And update `V1` migration: replace `AUTO_INCREMENT` with `SERIAL` (Postgres)  
 or `AUTO_INCREMENT` with `INT AUTO_INCREMENT` (MySQL — no change needed).
+
+
+
+### New Changes
+## How it all fits together
+```
+HTTP POST /api/loan/evaluate
+        │
+        ▼
+DroolsController.evaluateLoan()
+        │
+        ▼
+DroolsService.evaluateLoan()
+        │  opens kieContainer.newKieSession("loanSession")
+        │  ← only loanBase rules are loaded in this session
+        │  ← discount/fraud rules are completely isolated
+        ▼
+KieSession fires rules
+        │
+        ▼
+RuleAuditListener logs each rule fired
+        │
+        ▼
+session.dispose()
+        │
+        ▼
+Response returned
+
+### NOTE
+The package line inside each DRL must match the addPackage("rules.<category>") you registered:
+
+
+// loan-approval.drl  — stored in DB with category = "loan"
+package rules.loan;                        // ← must be "rules.loan"
+
+import com.poc.drools.model.LoanApplication;
+
+rule "Reject Low Credit Score"
+when
+  $loan: LoanApplication(creditScore < 600)
+then
+  $loan.setStatus("REJECTED");
+  update($loan);
+end
+
+// discount.drl  — stored in DB with category = "discount"
+package rules.discount;                    // ← must be "rules.discount"
+
+import com.poc.drools.model.Order;
+
+rule "VIP Customer Discount"
+when
+  $order: Order(customerType == "VIP")
+then
+  $order.setDiscountPercentage(20.0);
+  update($order);
+end

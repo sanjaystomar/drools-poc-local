@@ -16,7 +16,7 @@
 
         <!-- Stateful session — caller must call dispose() after use -->
         <ksession name="loanSession"
-                  type="stateful"
+                  type="stateless"
                   default="false"
                   clockType="realtime"/>
     </kbase>
@@ -30,7 +30,7 @@
     ═══════════════════════════════════════════════════════════════
     -->
     <kbase name="discountBase"
-           packages="rules.discount"
+           packages="org.n2n.learning.droolspoclocal.rules.discount"
            default="false">
 
         <!-- Stateless session — no working memory retained between calls -->
@@ -47,21 +47,21 @@
     - Pseudo clock for deterministic testing
     ═══════════════════════════════════════════════════════════════
     -->
-    <kbase name="fraudBase"
+    <!--<kbase name="fraudBase"
            packages="rules.fraud"
            default="false"
            eventProcessingMode="stream">
 
-        <!-- realtime clock for production -->
+        &lt;!&ndash; realtime clock for production &ndash;&gt;
         <ksession name="fraudSessionProd"
                   type="stateful"
                   clockType="realtime"/>
 
-        <!-- pseudo clock for tests — time is controlled manually -->
+        &lt;!&ndash; pseudo clock for tests — time is controlled manually &ndash;&gt;
         <ksession name="fraudSessionTest"
                   type="stateful"
                   clockType="pseudo"/>
-    </kbase>
+    </kbase>-->
 
 
     <!--
@@ -71,12 +71,12 @@
     - Marked as default — used when no name is specified
     ═══════════════════════════════════════════════════════════════
     -->
-    <kbase name="defaultBase"
+    <!--<kbase name="defaultBase"
            default="true">
 
         <ksession name="defaultSession"
                   type="stateful"
                   default="true"/>
     </kbase>
-
+-->
 </kmodule>

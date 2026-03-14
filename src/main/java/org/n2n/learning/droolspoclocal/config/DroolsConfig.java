@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * RuleReloadService.reload() — it rebuilds and replaces the KieContainer.
  */
 @Configuration
+@Profile("direct-impl")
 public class DroolsConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DroolsConfig.class);

@@ -1,7 +1,7 @@
-INSERT INTO drools_rules (rule_name, description, drl_content, active) VALUES (
+INSERT INTO drools_rules (rule_name, description, drl_content, active, category) VALUES (
                                                                                   'loan-approval',
                                                                                   'Evaluates loan applications by credit score, age, and income',
-                                                                                  'package rg.n2n.learning.droolspoclocal.rules;
+                                                                                  'package org.n2n.learning.droolspoclocal.rules.loan;
 
                                                                                   import org.n2n.learning.droolspoclocal.model.LoanApplication;
 
@@ -90,16 +90,16 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active) VALUES (
                                                                                           $loan.setReason("Does not meet minimum eligibility criteria");
                                                                                           update($loan);
                                                                                   end',
-                                                                                  TRUE
+                                                                                  TRUE, 'loan'
                                                                               ) ;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- Seed: Discount Rules
 -- ─────────────────────────────────────────────────────────────────────────────
-INSERT INTO drools_rules (rule_name, description, drl_content, active) VALUES (
+INSERT INTO drools_rules (rule_name, description, drl_content, active, category) VALUES (
                                                                                   'discount',
                                                                                   'Applies tiered discounts based on customer type, order size, and amount',
-                                                                                  'package com.poc.drools.rules;
+                                                                                  'package org.n2n.learning.droolspoclocal.rules.discount;
 
                                                                                   import org.n2n.learning.droolspoclocal.model.Order;
 
@@ -159,5 +159,5 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active) VALUES (
                                                                                           }
                                                                                           update($order);
                                                                                   end',
-                                                                                  TRUE
+                                                                                  TRUE, 'discount'
                                                                                 );

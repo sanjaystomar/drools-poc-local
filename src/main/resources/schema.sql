@@ -4,6 +4,7 @@ CREATE TABLE drools_rules (
                               description VARCHAR(500),
                               drl_content CLOB         NOT NULL,
                               active      BOOLEAN      NOT NULL DEFAULT TRUE,
+                              category    VARCHAR(50) NOT NULL DEFAULT 'general',
                               created_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
                               updated_at  TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

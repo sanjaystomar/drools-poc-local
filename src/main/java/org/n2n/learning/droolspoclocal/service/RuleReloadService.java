@@ -2,6 +2,7 @@ package org.n2n.learning.droolspoclocal.service;
 
 import org.kie.api.runtime.KieContainer;
 import org.n2n.learning.droolspoclocal.config.DroolsConfig;
+import org.n2n.learning.droolspoclocal.config.ModularDroolConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ public class RuleReloadService {
 
     private static final Logger log = LoggerFactory.getLogger(RuleReloadService.class);
 
-    private final DroolsConfig droolsConfig;
+    private final ModularDroolConfig droolsConfig;
     private final AtomicReference<KieContainer> containerRef;
     private volatile LocalDateTime lastReloadedAt;
 
-    public RuleReloadService(DroolsConfig droolsConfig, KieContainer initialContainer) {
+    public RuleReloadService(ModularDroolConfig droolsConfig, KieContainer initialContainer) {
         this.droolsConfig = droolsConfig;
         this.containerRef = new AtomicReference<>(initialContainer);
         this.lastReloadedAt = LocalDateTime.now();

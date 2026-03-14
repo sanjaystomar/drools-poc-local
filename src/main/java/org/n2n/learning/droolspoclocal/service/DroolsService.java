@@ -6,13 +6,13 @@ import org.n2n.learning.droolspoclocal.model.LoanApplication;
 import org.n2n.learning.droolspoclocal.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@Profile("direct-impl")
 public class DroolsService {
-
-    private static final Logger log = LoggerFactory.getLogger(DroolsService.class);
 
     private final RuleReloadService reloadService;
 
