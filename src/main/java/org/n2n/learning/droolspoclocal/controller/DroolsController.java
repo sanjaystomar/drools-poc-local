@@ -1,8 +1,9 @@
-package com.poc.drools.controller;
+package org.n2n.learning.droolspoclocal.controller;
 
-import com.poc.drools.model.LoanApplication;
-import com.poc.drools.model.Order;
-import com.poc.drools.service.DroolsService;
+import org.n2n.learning.droolspoclocal.model.LoanApplication;
+import org.n2n.learning.droolspoclocal.model.Order;
+import org.n2n.learning.droolspoclocal.service.DroolsService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.poc.drools.model;
+package org.n2n.learning.droolspoclocal.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

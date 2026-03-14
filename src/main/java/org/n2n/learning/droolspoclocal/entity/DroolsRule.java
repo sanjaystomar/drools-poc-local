@@ -1,4 +1,4 @@
-package com.poc.drools.entity;
+package org.n2n.learning.droolspoclocal.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
