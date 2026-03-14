@@ -1,8 +1,8 @@
-package com.poc.drools.admin;
+package org.n2n.learning.droolspoclocal.admin;
 
-import com.poc.drools.entity.DroolsRule;
-import com.poc.drools.repository.DroolsRuleRepository;
-import com.poc.drools.service.RuleReloadService;
+import org.n2n.learning.droolspoclocal.entity.DroolsRule;
+import org.n2n.learning.droolspoclocal.repository.DroolsRuleRepository;
+import org.n2n.learning.droolspoclocal.service.RuleReloadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

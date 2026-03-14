@@ -1,8 +1,9 @@
-package com.poc.drools.controller;
+package org.n2n.learning.droolspoclocal.controller;
 
-import com.poc.drools.model.LoanApplication;
-import com.poc.drools.model.Order;
-import com.poc.drools.service.DroolsService;
+import org.n2n.learning.droolspoclocal.model.LoanApplication;
+import org.n2n.learning.droolspoclocal.model.Order;
+import org.n2n.learning.droolspoclocal.service.DroolsService;
+import org.n2n.learning.droolspoclocal.service.ModularDroolService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,23 +11,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class DroolsController {
 
-    private final DroolsService droolsService;
+    private final ModularDroolService droolsService;
 
-    public DroolsController(DroolsService droolsService) {
+    public DroolsController(ModularDroolService droolsService) {
         this.droolsService = droolsService;
     }
 
     /**
      * POST /api/loan/evaluate
      * Evaluates a loan application using Drools rules.
-     *
+     * <p>
      * Example request body:
      * {
-     *   "applicantName": "John Doe",
-     *   "age": 30,
-     *   "annualIncome": 80000,
-     *   "creditScore": 720,
-     *   "requestedAmount": 200000
+     * "applicantName": "John Doe",
+     * "age": 30,
+     * "annualIncome": 80000,
+     * "creditScore": 720,
+     * "requestedAmount": 200000
      * }
      */
     @PostMapping("/loan/evaluate")
@@ -38,13 +39,13 @@ public class DroolsController {
     /**
      * POST /api/order/discount
      * Applies discount rules to an order.
-     *
+     * <p>
      * Example request body:
      * {
-     *   "customerId": "CUST001",
-     *   "customerType": "VIP",
-     *   "orderAmount": 1500,
-     *   "itemCount": 12
+     * "customerId": "CUST001",
+     * "customerType": "VIP",
+     * "orderAmount": 1500,
+     * "itemCount": 12
      * }
      */
     @PostMapping("/order/discount")

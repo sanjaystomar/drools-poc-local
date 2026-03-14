@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    KieBase: LOAN
+    - Scans only rules under the "rules.loan" package
+    - Stateful session (supports insert/update/retract)
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <kbase name="loanBase"
+           packages="rules.loan"
+           default="false"
+           eventProcessingMode="cloud"
+           equalsBehavior="equality">
+
+        <!-- Stateful session — caller must call dispose() after use -->
+        <ksession name="loanSession"
+                  type="stateless"
+                  default="false"
+                  clockType="realtime"/>
+    </kbase>
+
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    KieBase: DISCOUNT
+    - Scans only rules under the "rules.discount" package
+    - Stateless session — fire-and-forget, no dispose() needed
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <kbase name="discountBase"
+           packages="org.n2n.learning.droolspoclocal.rules.discount"
+           default="false">
+
+        <!-- Stateless session — no working memory retained between calls -->
+        <ksession name="discountSession"
+                  type="stateless"
+                  default="false"/>
+    </kbase>
+
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    KieBase: FRAUD (CEP — Complex Event Processing)
+    - Uses STREAM mode for temporal/event-ordering rules
+    - Pseudo clock for deterministic testing
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <!--<kbase name="fraudBase"
+           packages="rules.fraud"
+           default="false"
+           eventProcessingMode="stream">
+
+        &lt;!&ndash; realtime clock for production &ndash;&gt;
+        <ksession name="fraudSessionProd"
+                  type="stateful"
+                  clockType="realtime"/>
+
+        &lt;!&ndash; pseudo clock for tests — time is controlled manually &ndash;&gt;
+        <ksession name="fraudSessionTest"
+                  type="stateful"
+                  clockType="pseudo"/>
+    </kbase>-->
+
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    KieBase: DEFAULT
+    - Scans ALL packages (no "packages" filter)
+    - Marked as default — used when no name is specified
+    ═══════════════════════════════════════════════════════════════
+    -->
+    <!--<kbase name="defaultBase"
+           default="true">
+
+        <ksession name="defaultSession"
+                  type="stateful"
+                  default="true"/>
+    </kbase>
+-->
+</kmodule>

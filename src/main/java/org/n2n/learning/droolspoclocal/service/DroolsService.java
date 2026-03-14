@@ -1,16 +1,18 @@
-package com.poc.drools.service;
+package org.n2n.learning.droolspoclocal.service;
 
-import com.poc.drools.model.LoanApplication;
-import com.poc.drools.model.Order;
+import lombok.extern.slf4j.Slf4j;
 import org.kie.api.runtime.KieSession;
+import org.n2n.learning.droolspoclocal.model.LoanApplication;
+import org.n2n.learning.droolspoclocal.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
+@Profile("direct-impl")
 public class DroolsService {
-
-    private static final Logger log = LoggerFactory.getLogger(DroolsService.class);
 
     private final RuleReloadService reloadService;
 
@@ -19,6 +21,7 @@ public class DroolsService {
     }
 
     public LoanApplication evaluateLoan(LoanApplication application) {
+        log.info("HERE ###########");
         KieSession session = reloadService.getKieContainer().newKieSession();
         try {
             log.info("Evaluating loan for applicant: {}", application.getApplicantName());
