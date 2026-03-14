@@ -198,3 +198,35 @@ then
   $order.setDiscountPercentage(20.0);
   update($order);
 end
+
+
+
+
+## sample payload
+
+```
+
+{ 
+ "customerId": "CUST001",
+ "customerType": "VIP",
+ "orderAmount": 1500,
+ "itemCount": 12,
+ "discountPercentage": 0,
+ "finalAmount": 0,
+ "discountReason": ""
+ }
+```
+
+```
+{
+ "applicantName": "John Doe",
+ "age": 30,
+ "annualIncome": 80000,
+ "creditScore": 720,
+ "requestedAmount": 4000000,
+ "approved": false,
+ "status": "",
+ "reason": "",
+ "approvedAmount":0
+}
+```
