@@ -230,3 +230,5 @@ end
  "approvedAmount":0
 }
 ```
+
+curl --location 'http://localhost:8080/api/loan/evaluate' --header 'Content-Type: application/json' --data '{"applicantName": "Jane Doe","age": 20,"annualIncome": 50000,"creditScore": 800,"requestedAmount": 200000,"approved": false,"status": "","reason": "","approvedAmount":0}'
