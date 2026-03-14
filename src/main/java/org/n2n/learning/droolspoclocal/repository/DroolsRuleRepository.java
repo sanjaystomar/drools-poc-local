@@ -1,6 +1,6 @@
-package com.poc.drools.repository;
+package org.n2n.learning.droolspoclocal.repository;
 
-import com.poc.drools.entity.DroolsRule;
+import org.n2n.learning.droolspoclocal.entity.DroolsRule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

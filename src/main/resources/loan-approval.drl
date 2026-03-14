@@ -1,0 +1,91 @@
+  loan-approval,
+  Evaluates loan applications by credit score, age, and income,
+  package rg.n2n.learning.droolspoclocal.rules;
+
+  import org.n2n.learning.droolspoclocal.model.LoanApplication;
+
+  rule "Reject Low Credit Score"
+      salience 100
+      when
+          $loan: LoanApplication(creditScore < 600, !approved)
+      then
+          $loan.setApproved(false);
+          $loan.setStatus("REJECTED");
+          $loan.setReason("Credit score below minimum threshold of 600");
+          update($loan);
+  end
+
+  rule "Reject Underage Applicant"
+      salience 100
+      when
+          $loan: LoanApplication(age < 18, !approved)
+      then
+          $loan.setApproved(false);
+          $loan.setStatus("REJECTED");
+          $loan.setReason("Applicant must be at least 18 years old");
+          update($loan);
+  end
+
+  rule "Reject Insufficient Income"
+      salience 90
+      when
+          $loan: LoanApplication(
+              creditScore >= 600,
+              age >= 18,
+              requestedAmount > annualIncome * 5,
+              !approved
+          )
+      then
+          $loan.setApproved(false);
+          $loan.setStatus("REJECTED");
+          $loan.setReason("Requested amount exceeds 5x annual income limit");
+          update($loan);
+  end
+
+  rule "Approve Full Amount - Excellent Credit"
+      salience 80
+      when
+          $loan: LoanApplication(
+              creditScore >= 750,
+              age >= 18,
+              annualIncome >= 50000,
+              requestedAmount <= annualIncome * 5,
+              status == null
+          )
+      then
+          $loan.setApproved(true);
+          $loan.setStatus("APPROVED");
+          $loan.setApprovedAmount($loan.getRequestedAmount());
+          $loan.setReason("Excellent credit profile - full amount approved");
+          update($loan);
+  end
+
+  rule "Approve Partial Amount - Good Credit"
+      salience 70
+      when
+          $loan: LoanApplication(
+              creditScore >= 650,
+              creditScore < 750,
+              age >= 18,
+              annualIncome >= 30000,
+              requestedAmount <= annualIncome * 5,
+              status == null
+          )
+      then
+          $loan.setApproved(true);
+          $loan.setStatus("CONDITIONALLY_APPROVED");
+          $loan.setApprovedAmount($loan.getRequestedAmount() * 0.75);
+          $loan.setReason("Good credit - approved 75% of requested amount");
+          update($loan);
+  end
+
+  rule "Default Rejection"
+      salience 1
+      when
+          $loan: LoanApplication(status == null)
+      then
+          $loan.setApproved(false);
+          $loan.setStatus("REJECTED");
+          $loan.setReason("Does not meet minimum eligibility criteria");
+          update($loan);
+  end

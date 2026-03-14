@@ -1,7 +1,7 @@
-package com.poc.drools.service;
+package org.n2n.learning.droolspoclocal.service;
 
-import com.poc.drools.config.DroolsConfig;
 import org.kie.api.runtime.KieContainer;
+import org.n2n.learning.droolspoclocal.config.DroolsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

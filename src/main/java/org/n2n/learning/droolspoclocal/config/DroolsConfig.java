@@ -1,7 +1,5 @@
-package com.poc.drools.config;
+package org.n2n.learning.droolspoclocal.config;
 
-import com.poc.drools.entity.DroolsRule;
-import com.poc.drools.repository.DroolsRuleRepository;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
@@ -9,6 +7,8 @@ import org.kie.api.builder.KieModule;
 import org.kie.api.builder.Message;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.n2n.learning.droolspoclocal.entity.DroolsRule;
+import org.n2n.learning.droolspoclocal.repository.DroolsRuleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
