@@ -7,8 +7,9 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Reject Low Credit Score"
                                                                                       salience 100
+                                                                                      no-loop true
                                                                                       when
-                                                                                          $loan: LoanApplication(creditScore < 600, !approved)
+                                                                                          $loan: LoanApplication(creditScore < 600, !approved, status==null || status=="")
                                                                                       then
                                                                                           $loan.setApproved(false);
                                                                                           $loan.setStatus("REJECTED");
@@ -18,8 +19,9 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Reject Underage Applicant"
                                                                                       salience 100
+                                                                                      no-loop true
                                                                                       when
-                                                                                          $loan: LoanApplication(age < 18, !approved)
+                                                                                          $loan: LoanApplication(age < 18, !approved, status==null || status=="")
                                                                                       then
                                                                                           $loan.setApproved(false);
                                                                                           $loan.setStatus("REJECTED");
@@ -29,10 +31,11 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Reject Insufficient Income"
                                                                                       salience 90
+                                                                                      no-loop true
                                                                                       when
                                                                                           $loan: LoanApplication(
                                                                                               creditScore >= 600,
-                                                                                              age >= 18,
+                                                                                              age >= 18, status==null || status=="",
                                                                                               requestedAmount > annualIncome * 5,
                                                                                               !approved
                                                                                           )
@@ -45,10 +48,11 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Approve Full Amount - Excellent Credit"
                                                                                       salience 80
+                                                                                      no-loop true
                                                                                       when
                                                                                           $loan: LoanApplication(
                                                                                               creditScore >= 750,
-                                                                                              age >= 18,
+                                                                                              age >= 18,status==null,
                                                                                               annualIncome >= 50000,
                                                                                               requestedAmount <= annualIncome * 5,
                                                                                               status == null
@@ -63,11 +67,12 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Approve Partial Amount - Good Credit"
                                                                                       salience 70
+                                                                                      no-loop true
                                                                                       when
                                                                                           $loan: LoanApplication(
                                                                                               creditScore >= 650,
                                                                                               creditScore < 750,
-                                                                                              age >= 18,
+                                                                                              age >= 18, status==null || status=="",
                                                                                               annualIncome >= 30000,
                                                                                               requestedAmount <= annualIncome * 5,
                                                                                               status == null
@@ -82,8 +87,9 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Default Rejection"
                                                                                       salience 1
+                                                                                      no-loop true
                                                                                       when
-                                                                                          $loan: LoanApplication(status == null)
+                                                                                          $loan: LoanApplication(status == null || status == "")
                                                                                       then
                                                                                           $loan.setApproved(false);
                                                                                           $loan.setStatus("REJECTED");
@@ -105,6 +111,7 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "VIP Customer Discount"
                                                                                       salience 100
+                                                                                      no-loop true
                                                                                       when
                                                                                           $order: Order(customerType == "VIP")
                                                                                       then
@@ -115,6 +122,7 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Premium Customer Discount"
                                                                                       salience 90
+                                                                                      no-loop true
                                                                                       when
                                                                                           $order: Order(customerType == "PREMIUM", discountPercentage == 0.0)
                                                                                       then
@@ -125,6 +133,7 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Bulk Order Bonus Discount"
                                                                                       salience 80
+                                                                                      no-loop true
                                                                                       when
                                                                                           $order: Order(itemCount >= 10, orderAmount >= 500)
                                                                                       then
@@ -138,6 +147,7 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "High Value Order Discount"
                                                                                       salience 70
+                                                                                      no-loop true
                                                                                       when
                                                                                           $order: Order(orderAmount >= 1000, customerType == "REGULAR")
                                                                                       then
@@ -148,8 +158,9 @@ INSERT INTO drools_rules (rule_name, description, drl_content, active, category)
 
                                                                                   rule "Calculate Final Amount"
                                                                                       salience 1
+                                                                                      no-loop true
                                                                                       when
-                                                                                          $order: Order(finalAmount == 0.0)
+                                                                                          $order: Order(finalAmount == 0.0 && discountReason == "")
                                                                                       then
                                                                                           double discount = $order.getDiscountPercentage();
                                                                                           double finalAmt = $order.getOrderAmount() * (1 - discount / 100);
