@@ -32,7 +32,7 @@ public class DroolsController {
      */
     @PostMapping("/loan/evaluate")
     public ResponseEntity<LoanApplication> evaluateLoan(@RequestBody LoanApplication application) {
-        LoanApplication result = droolsService.evaluateLoan(application);
+        LoanApplication result = droolsService.evaluateLoanStatless(application);
         return ResponseEntity.ok(result);
     }
 

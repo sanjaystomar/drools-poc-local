@@ -49,24 +49,29 @@ public class ModularDroolConfig {
                 .collect(Collectors.groupingBy(DroolsRule::getCategory));
 
         for (String category : byCategory.keySet()) {
-            String kbaseName = category + "Base";
-            String ksessionName = category + "Session";
+            String kbaseName          = category + "Base";
+            String statefulSession    = category + "Session";
+            String statelessSession   = category + "StatelessSession";
 
             KieBaseModel kbaseModel = moduleModel
                     .newKieBaseModel(kbaseName)
                     .setDefault(false)
-                    .addPackage("rules." + category)          // must match package in .drl
+                    .addPackage("rules." + category)
                     .setEqualsBehavior(EqualityBehaviorOption.EQUALITY)
                     .setEventProcessingMode(EventProcessingOption.CLOUD);
 
-            kbaseModel
-                    .newKieSessionModel(ksessionName)
+            // Stateful — for multi-step, update/retract scenarios
+            kbaseModel.newKieSessionModel(statefulSession)
                     .setDefault(false)
                     .setType(KieSessionModel.KieSessionType.STATEFUL)
                     .setClockType(ClockTypeOption.get("realtime"));
 
-            log.info("Registered KieBase='{}' KieSession='{}' for category='{}'",
-                    kbaseName, ksessionName, category);
+            // Stateless — for simple fire-and-forget evaluation
+            kbaseModel.newKieSessionModel(statelessSession)
+                    .setDefault(false)
+                    .setType(KieSessionModel.KieSessionType.STATELESS);
+
+            log.info("Registered KieBases for category='{}'", category);
         }
 
         // ── 2. Write generated kmodule XML + DRL content into KieFileSystem ──
